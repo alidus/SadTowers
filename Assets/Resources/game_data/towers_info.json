@@ -1,0 +1,27 @@
+{
+	"tower_1":{
+		"name": "Simple turret",
+	    "cost": 5,
+	    "range": 30,
+		"damage": 1,
+		"fire_delay": 0.55
+	},
+    "tower_2":{
+		"name": "Rocket turret",
+		"cost": 10,
+		"range": 35,
+		"damage": 2,
+		"fire_delay": 0.7
+	},
+	"tower_2_1":{
+		"name": "Rocket turret v2",
+		"cost": 20,
+		"range": 40,
+		"damage": 3,
+		"fire_delay": 0.35
+	},
+	"starting_money": 12,
+	"starting_lifes": 20,
+	"tower_2_rocket_base_speed": 17,
+	"game_start_delay": 10
+}

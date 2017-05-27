@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 81a474266d1acce4db45ff075e9f68ae
+timeCreated: 1473850191
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Homizio Nova
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 72fa8b08aeda788408b770be2878c957, type: 3}
+  - {fileID: 12800000, guid: 0a99cf788593cbc4f800113bd4cca3b8, type: 3}
+  - {fileID: 12800000, guid: 306dc3dac4f13834cbce5cc3ff80991c, type: 3}
+  - {fileID: 12800000, guid: 119311fbbaf1ab040bf9ea469fe0e419, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFirstTDGame.Plugins", "MyFirstTDGame.Plugins.csproj", "{A21F6F07-1CCB-DE93-360D-2AC493EE3C49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFirstTDGame", "MyFirstTDGame.csproj", "{993B87C7-E734-CC45-32CD-D20A77DE3DD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFirstTDGame.Editor", "MyFirstTDGame.Editor.csproj", "{DCDC8DC2-C405-F24B-E5D8-1ECD8711242F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A21F6F07-1CCB-DE93-360D-2AC493EE3C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A21F6F07-1CCB-DE93-360D-2AC493EE3C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A21F6F07-1CCB-DE93-360D-2AC493EE3C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A21F6F07-1CCB-DE93-360D-2AC493EE3C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{993B87C7-E734-CC45-32CD-D20A77DE3DD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{993B87C7-E734-CC45-32CD-D20A77DE3DD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{993B87C7-E734-CC45-32CD-D20A77DE3DD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{993B87C7-E734-CC45-32CD-D20A77DE3DD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCDC8DC2-C405-F24B-E5D8-1ECD8711242F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCDC8DC2-C405-F24B-E5D8-1ECD8711242F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCDC8DC2-C405-F24B-E5D8-1ECD8711242F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCDC8DC2-C405-F24B-E5D8-1ECD8711242F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
