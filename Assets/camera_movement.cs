@@ -2,135 +2,101 @@
 using System.Collections;
 
 public class camera_movement : MonoBehaviour {
-    float speed = 1f;
-    Vector3 looking_point;
-    float camera_height = 50f;
-    float angle;
-    Vector3 default_looking_point;
-    float sensitivity = 5;
-    float radius = 50;
-    float max_center_shift = 40;
-    float grads_to_rads(float grads)
-        {
-        return grads * Mathf.PI / 180;
-        }
+    float speedWithScreenSidesTouches = 1f;
+    int reactingZonesWide = 10;
+    int cameraRotationSpeed = 2;
+    float height = 50f;
+
+    private Vector3 cameraMovementVector = new Vector3(0, 0, 0);
+    private int[] positionLimitBox = new int[2];
+
+    private Vector3 dragOrigin;
+    public float dragSpeed = 2;
+ 
 	// Use this for initialization
 	void Start () {
-        default_looking_point = new Vector3(50, 0, 50);
-        looking_point = default_looking_point;
-        transform.position = looking_point + new Vector3(0, camera_height, 0);    
-        angle = 0;
+        setLimitBox();
         }
-	void SetNewCamPos()
+    public void setLimitBox(int x = 50, int y = 50)
         {
-        transform.position = looking_point + new Vector3(Mathf.Cos(grads_to_rads(angle)) * radius, 0, Mathf.Sin(grads_to_rads(angle)) * radius) + new Vector3(0, camera_height, 0);
+        positionLimitBox[0] = x;
+        positionLimitBox[1] = y;
         }
-    void SetNewCamRot()
+    private void Update()
         {
-        transform.rotation = Quaternion.LookRotation(looking_point - transform.position);
+        checkScreenSidesTouches();
+        if (cameraMovementVector != Vector3.zero)
+            {
+            AdjustMovementVectorToRotation();
+            MoveCamera();
+            ConsiderLimitBox();
+            }
+        RotateCamera();
         }
-    void TurnCamera(int dir)    // 0 - left, 1 - right
+
+    private void checkScreenSidesTouches()
         {
-        if (dir ==  0)
+        cameraMovementVector = Vector3.zero;
+        if (Input.mousePosition.x <= reactingZonesWide)
             {
-            if (angle >= 0)
-                {
-                angle -= speed;
-                }
-            else
-                {
-                angle = 360;
-                }
+            cameraMovementVector = new Vector3(-speedWithScreenSidesTouches, 0, 0);
             }
-        else if (dir == 1)
+        else if (Input.mousePosition.x >= Screen.width - reactingZonesWide)
             {
-            if (angle <= 360)
-                {
-                angle += speed;
-                }
-            else
-                {
-                angle = 0;
-                }
+            cameraMovementVector = new Vector3(speedWithScreenSidesTouches, 0, 0);
             }
-        
+        if (Input.mousePosition.y <= reactingZonesWide)
+            {
+            cameraMovementVector = new Vector3(0, 0, -speedWithScreenSidesTouches);
+            }
+        else if (Input.mousePosition.y >= Screen.height - reactingZonesWide)
+            {
+            cameraMovementVector = new Vector3(0, 0, speedWithScreenSidesTouches);
+            }
         }
-    void MoveCameraCenterPoint(int dir) //0 - left 1 - top 2 - right 3 - bottom
+
+    private void AdjustMovementVectorToRotation()
         {
-        Vector3 vec = (looking_point - transform.position).normalized;
-        vec.y = 0;
-        switch (dir)
-            {
-            case 0:
-                vec = Quaternion.Euler(0, -90, 0) * vec;
-                looking_point += vec * speed;
-                break;
-            case 1:
-                looking_point += vec * speed;
-                break;
-            case 2:
-                vec = Quaternion.Euler(0, 90, 0) * vec;
-                looking_point += vec * speed;
-                break;
-            case 3:
-                looking_point -= vec * speed;
-                break;
-            default:
-                break;
-            }
-        if (looking_point.x < default_looking_point.x - max_center_shift)
-            {
-            looking_point.x = default_looking_point.x - max_center_shift;
-            }
-        else if (looking_point.x > default_looking_point.x + max_center_shift)
-            {
-            looking_point.x = default_looking_point.x + max_center_shift;
-            }
-        if (looking_point.z < default_looking_point.z - max_center_shift)
-            {
-            looking_point.z = default_looking_point.z - max_center_shift;
-            }
-        else if (looking_point.z > default_looking_point.z + max_center_shift)
-            {
-            looking_point.z = default_looking_point.z + max_center_shift;
-            }
-        SetNewCamPos();
+        cameraMovementVector = Quaternion.Euler(0, transform.eulerAngles.y, 0) * cameraMovementVector;
         }
-    // Update is called once per frame
-    void Update() {
+
+    private void MoveCamera()
+        {
+
+        transform.Translate(cameraMovementVector, Space.World);
+        }
+
+    private void RotateCamera()
+        {
         if (Input.GetKey(KeyCode.Q))
             {
-            TurnCamera(0);
+            transform.Rotate(new Vector3(0, -cameraRotationSpeed, 0), Space.World);
             }
         if (Input.GetKey(KeyCode.E))
             {
-            TurnCamera(1);
+            transform.Rotate(new Vector3(0, cameraRotationSpeed, 0), Space.World);
             }
-        if (Input.mousePosition.y >= Screen.height - sensitivity)
-            {
-            MoveCameraCenterPoint(1);
-            }
-        else if (Input.mousePosition.y <= sensitivity)
-            {
-            MoveCameraCenterPoint(3);
-            }
-        if (Input.mousePosition.x >= Screen.width - sensitivity)
-            {
-            MoveCameraCenterPoint(2);
-            }
-        else if (Input.mousePosition.x <= sensitivity)
-            {
-            MoveCameraCenterPoint(0);
-            }
-        //if (Input.mousePosition.x >= Screen.width - sensitivity)
-        //    {
+        print(transform.eulerAngles);
+        }
 
-        //    }
-        //else if (Input.mousePosition.x <= sensitivity)
-        //    {
+    private void ConsiderLimitBox()
+        {
+        if (transform.position.x < -positionLimitBox[0])
+            {
+            transform.position = new Vector3(-positionLimitBox[0], transform.position.y, transform.position.z);
+            }
+        else if (transform.position.x > positionLimitBox[0])
+            {
+            transform.position = new Vector3(positionLimitBox[0], transform.position.y, transform.position.z);
+            }
+        if (transform.position.z < -positionLimitBox[1])
+            {
+            transform.position = new Vector3(transform.position.x, transform.position.y,  -positionLimitBox[1]);
+            }
+        else if (transform.position.z > positionLimitBox[1])
+            {
+            transform.position = new Vector3(transform.position.x, transform.position.y, positionLimitBox[1]);
+            }
+        }
 
-        //    }
-        SetNewCamPos();
-        SetNewCamRot();
-	}
-}
+    }

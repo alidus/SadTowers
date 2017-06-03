@@ -97,13 +97,14 @@
     <Compile Include="Assets\scripts\explosion_destroy.cs" />
     <Compile Include="Assets\scripts\game_logic.cs" />
     <Compile Include="Assets\scripts\gameover_timer_text_logic.cs" />
-    <Compile Include="Assets\scripts\tower1_head_logic.cs" />
+    <Compile Include="Assets\scripts\tower1_logic.cs" />
     <Compile Include="Assets\scripts\tower2_gun_logic.cs" />
     <Compile Include="Assets\scripts\tower2_head_logic.cs" />
     <Compile Include="Assets\scripts\tower2_neck_logic.cs" />
+    <Compile Include="Assets\scripts\towerLogic.cs" />
     <Compile Include="Assets\scripts\tower_2_1_head_logic.cs" />
     <Compile Include="Assets\scripts\tower_2_rocket_logic.cs" />
-    <Compile Include="Assets\scripts\tower_3_head_logic.cs" />
+    <Compile Include="Assets\scripts\tower_3_logic.cs" />
     <Compile Include="Assets\scripts\tower_basement_logic.cs" />
     <Compile Include="Assets\scripts\turret_panel_logic.cs" />
     <Compile Include="Assets\waveNotify.cs" />
