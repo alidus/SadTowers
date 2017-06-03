@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadTowers.Plugins", "SadTowers.Plugins.csproj", "{70CEE3F1-683C-0293-8676-4F9DC952336E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadTowers", "SadTowers.csproj", "{690A8073-D4DC-646B-C6BD-D08F81F99446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadTowers.Editor", "SadTowers.Editor.csproj", "{31A53E6F-D4C0-EC6A-49BC-6D0EEFF1EA32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70CEE3F1-683C-0293-8676-4F9DC952336E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70CEE3F1-683C-0293-8676-4F9DC952336E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70CEE3F1-683C-0293-8676-4F9DC952336E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70CEE3F1-683C-0293-8676-4F9DC952336E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{690A8073-D4DC-646B-C6BD-D08F81F99446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690A8073-D4DC-646B-C6BD-D08F81F99446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690A8073-D4DC-646B-C6BD-D08F81F99446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690A8073-D4DC-646B-C6BD-D08F81F99446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A53E6F-D4C0-EC6A-49BC-6D0EEFF1EA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A53E6F-D4C0-EC6A-49BC-6D0EEFF1EA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A53E6F-D4C0-EC6A-49BC-6D0EEFF1EA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A53E6F-D4C0-EC6A-49BC-6D0EEFF1EA32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
