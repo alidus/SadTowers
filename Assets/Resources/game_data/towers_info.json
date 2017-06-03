@@ -27,7 +27,7 @@
 		"damage": 1,
 		"fire_delay": 0.1
 	},
-	"starting_money": 9000,
+	"starting_money": 30,
 	"starting_lifes": 20,
 	"tower_2_rocket_base_speed": 17,
 	"game_start_delay": 5,
