@@ -20,13 +20,16 @@ public class game_logic : MonoBehaviour {
     // game variables and info panels init
         // money
     public int money;
+    [SerializeField]
     private Text money_text;
         // lifes
     private int lifes;
+    [SerializeField]
     private Text lifes_text;
     private bool game_over = false;
         // timer
     public float time_passed;
+    [SerializeField]
     private Text timer_panel_text;
     private AudioClip[] playlist;
     private bool game_paused = false;
@@ -35,10 +38,13 @@ public class game_logic : MonoBehaviour {
     private AudioSource audio_source;
 
     public int selected_turret_index = -1;
+    [SerializeField]
     private data_store_logic Data_Store;
         // game start cooldown
     private float game_start_cooldown;
+    [SerializeField]
     private GameObject start_cooldown_panel;
+    [SerializeField]
     private GameObject start_cooldown_text;
     private Text start_cooldown_text_text;
         // playing song panel
@@ -54,12 +60,6 @@ public class game_logic : MonoBehaviour {
         }
     // Use this for initialization
     void Start() {
-        money_text = GameObject.Find("money_text").GetComponent<Text>();
-        lifes_text = GameObject.Find("lifes_text").GetComponent<Text>();
-        Data_Store = GameObject.Find("Data_Store").GetComponent<data_store_logic>();
-        timer_panel_text = GameObject.Find("timer_text").GetComponent<Text>();
-        start_cooldown_panel = GameObject.Find("start_cooldown_panel").gameObject;
-        start_cooldown_text = GameObject.Find("start_cooldown_text").gameObject;
         start_cooldown_panel.GetComponent<Image>().CrossFadeAlpha(0, 0, false);
         start_cooldown_text.GetComponent<Text>().CrossFadeAlpha(0, 0, false);
         start_cooldown_text_text = start_cooldown_text.GetComponent<Text>();
@@ -70,6 +70,7 @@ public class game_logic : MonoBehaviour {
         // init all turret panels of UI
         list_of_turret_panels_images.Add(GameObject.Find("turret_1_panel").GetComponent<Image>());
         list_of_turret_panels_images.Add(GameObject.Find("turret_2_panel").GetComponent<Image>());
+        list_of_turret_panels_images.Add(GameObject.Find("turret_3_panel").GetComponent<Image>());
         game_start_cooldown = Data_Store.data.game_start_delay;
         HideUnecessaryUiStuff();
         init_current_playing_song_shower();
@@ -91,8 +92,8 @@ public class game_logic : MonoBehaviour {
         }
     void HideUnecessaryUiStuff()
         {
-        Image lifes_panel = GameObject.Find("lifes_panel").GetComponent<Image>();
-        Image time_panel = GameObject.Find("time_panel").GetComponent<Image>();
+        Image lifes_panel = GameObject.Find("PanelLifes").GetComponent<Image>();
+        Image time_panel = GameObject.Find("PanelTimer").GetComponent<Image>();
         lifes_panel.CrossFadeAlpha(0, 0, false);
         time_panel.CrossFadeAlpha(0, 0, false);
         lifes_text.CrossFadeAlpha(0, 0, false);
@@ -100,8 +101,8 @@ public class game_logic : MonoBehaviour {
         }
     void ShowUnecessaryUiStuff(float fade_time=1f)
         {
-        Image lifes_panel = GameObject.Find("lifes_panel").GetComponent<Image>();
-        Image time_panel = GameObject.Find("time_panel").GetComponent<Image>();
+        Image lifes_panel = GameObject.Find("PanelLifes").GetComponent<Image>();
+        Image time_panel = GameObject.Find("PanelTimer").GetComponent<Image>();
         lifes_panel.CrossFadeAlpha(0.8f, fade_time, false);
         time_panel.CrossFadeAlpha(0.8f, fade_time, false);
         lifes_text.CrossFadeAlpha(1f, fade_time, false);
@@ -109,9 +110,9 @@ public class game_logic : MonoBehaviour {
         }
     void init_current_playing_song_shower()
         {
-        playing_song_panel_image = GameObject.Find("playing_song_panel").GetComponent<Image>();
-        playing_song_panel_lable_text = GameObject.Find("playing_song_panel_label").GetComponent<Text>();
-        playing_song_name = GameObject.Find("playing_song_name").GetComponent<Text>();
+        playing_song_panel_image = GameObject.Find("PanelPlayingSong").GetComponent<Image>();
+        playing_song_panel_lable_text = GameObject.Find("TextPlayingSongHeader").GetComponent<Text>();
+        playing_song_name = GameObject.Find("TextPlayingSongTitle").GetComponent<Text>();
         playing_song_panel_image.CrossFadeAlpha(0, 0, false);
         playing_song_panel_lable_text.CrossFadeAlpha(0, 0, false);
         playing_song_name.CrossFadeAlpha(0, 0, false);
@@ -171,6 +172,10 @@ public class game_logic : MonoBehaviour {
             Data_Store.data.tower_2.cost.ToString() + "\nDPS: " +
             System.Math.Round((Data_Store.data.tower_2.damage / Data_Store.data.tower_2.fire_delay), 2).ToString() +
             "\nRange: " + Data_Store.data.tower_2.range.ToString();
+        GameObject.Find("turret_3_info").GetComponent<Text>().text = "Cost: " +
+            Data_Store.data.tower_3.cost.ToString() + "\nDPS: " +
+            System.Math.Round((Data_Store.data.tower_3.damage / Data_Store.data.tower_3.fire_delay), 2).ToString() +
+            "\nRange: " + Data_Store.data.tower_3.range.ToString();
         }
     public void ChangeSelectedTurretTo(int index)
         {
@@ -184,6 +189,9 @@ public class game_logic : MonoBehaviour {
                 break;
             case 1:
                 list_of_turret_panels_images[1].color = new Color(0, 1, 0, 0.4f);
+                break;
+            case 2:
+                list_of_turret_panels_images[2].color = new Color(0, 1, 0, 0.4f);
                 break;
             case -1:
                 
@@ -305,7 +313,7 @@ public class game_logic : MonoBehaviour {
             }
         else
             {
-            start_cooldown_text_text.text = "Game will start in " + System.Math.Round(game_start_cooldown, 2).ToString();
+            start_cooldown_text_text.text = "Game will start in " + System.Math.Round(game_start_cooldown).ToString();
             game_start_cooldown -= Time.deltaTime;
             if (game_start_cooldown <= 1)
                 {

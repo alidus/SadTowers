@@ -8,8 +8,8 @@ public class tower2_gun_logic : MonoBehaviour {
     private game_logic Game_Logic;
     // Use this for initialization
     void Start () {
-        Data_Store = GameObject.Find("Data_Store").GetComponent<data_store_logic>();
-        Game_Logic = GameObject.Find("Game_Logic").GetComponent<game_logic>();
+        Data_Store = GameObject.Find("DataStore").GetComponent<data_store_logic>();
+        Game_Logic = GameObject.Find("GameLogic").GetComponent<game_logic>();
         }
 	
 	// Update is called once per frame

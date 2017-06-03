@@ -52,7 +52,7 @@ public class tower1_head_logic : MonoBehaviour {
 	// Update is called once per frame
     void SetupSpecs()
         {
-        Data_Store = GameObject.Find("Data_Store").GetComponent<data_store_logic>();
+        Data_Store = GameObject.Find("DataStore").GetComponent<data_store_logic>();
         tower_damage = Data_Store.data.tower_1.damage;
         cost = Data_Store.data.tower_1.cost;
         range = Data_Store.data.tower_1.range;
@@ -68,8 +68,15 @@ public class tower1_head_logic : MonoBehaviour {
             Vector3 target_look_vector = target_enemy_go.transform.position - transform.position;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target_look_vector), Time.deltaTime * turn_rate);
             if (current_shoot_cooldown <= 0)
-                {
-                Shoot();
+                { 
+                try
+                    {
+                    Invoke("Shoot", 0.1f);
+                    }
+                catch (UnityException)
+                    {
+                    print("Tried to shoot but enemy was destroyed");
+                    }
                 current_shoot_cooldown = main_shoot_cooldown;
                 }
             else
@@ -80,7 +87,7 @@ public class tower1_head_logic : MonoBehaviour {
             }
         else
             {
-            transform.rotation = Quaternion.Lerp(transform.rotation, default_rotation, Time.deltaTime * turn_rate);
+
             }
         
         }

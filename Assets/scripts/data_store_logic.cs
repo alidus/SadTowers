@@ -12,10 +12,14 @@ public class data_store_logic : MonoBehaviour {
         public TowerData tower_1;
         public TowerData tower_2;
         public TowerData tower_2_1;
+        public TowerData tower_3;
         public int starting_money;
         public int starting_lifes;
         public int tower_2_rocket_base_speed;
         public int game_start_delay;
+        public int endless_mode_base_health;
+        public int endless_mode_base_speed;
+        public int endless_mode_speed_per_wave;
         }
     [System.Serializable]
     public class TowerData

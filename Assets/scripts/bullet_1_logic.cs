@@ -5,7 +5,7 @@ using System;
 public class bullet_1_logic : MonoBehaviour {
     public GameObject target_enemy;
     private Vector3 direction;
-    private float speed = 40f;
+    private float speed = 70f;
     private float dist_per_frame;
     public float damage;
 
@@ -31,8 +31,8 @@ public class bullet_1_logic : MonoBehaviour {
         {
         if (target_enemy)
             {
-            enemy_1_logic enemy_logic = target_enemy.GetComponent<enemy_1_logic>();
-            enemy_logic.health -= damage;
+            enemy_logic enemy_logic = target_enemy.GetComponent<enemy_logic>();
+            enemy_logic.changeHealth(-damage, "Turrent 1 bullet");
             Destroy(gameObject);
             Instantiate(Resources.Load("game_units/towers/bullet_explosion"), transform.position, transform.rotation);
             }

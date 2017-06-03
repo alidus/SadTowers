@@ -51,7 +51,7 @@ public class tower2_head_logic : MonoBehaviour {
         }
     void SetupSpecs()
         {
-        Data_Store = GameObject.Find("Data_Store").GetComponent<data_store_logic>();
+        Data_Store = GameObject.Find("DataStore").GetComponent<data_store_logic>();
         tower_damage = Data_Store.data.tower_2.damage;
         cost = Data_Store.data.tower_2.cost;
         range = Data_Store.data.tower_2.range;
@@ -70,7 +70,15 @@ public class tower2_head_logic : MonoBehaviour {
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(air_shot_point + new Vector3(0, (target_enemy_go.transform.position - transform.position).magnitude / 3 * 0.7f, 0)), Time.deltaTime * turn_rate);
             if (current_shoot_cooldown <= 0)
                 {
-                Shoot();
+                try
+                    {
+                    Shoot();
+                    }
+                catch (UnityException)
+                    {
+                    // Enemy was destroyed
+                    }
+                
                 current_shoot_cooldown = main_shoot_cooldown;
                 }
             else
@@ -81,7 +89,7 @@ public class tower2_head_logic : MonoBehaviour {
             }
         else
             {
-            transform.rotation = Quaternion.Lerp(transform.rotation, default_rotation, Time.deltaTime * turn_rate);
+            
             }
         
         }

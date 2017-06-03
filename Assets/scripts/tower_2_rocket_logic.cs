@@ -57,8 +57,8 @@ public class tower_2_rocket_logic : MonoBehaviour {
         {
         if (target_enemy)
             {
-            enemy_1_logic enemy_logic = target_enemy.GetComponent<enemy_1_logic>();
-            enemy_logic.health -= damage;
+            enemy_logic enemy_logic = target_enemy.GetComponent<enemy_logic>();
+            enemy_logic.changeHealth(-damage, "Turret 2 Rocket");
             Destroy(gameObject);
             Instantiate(Resources.Load("game_units/towers/rocket_explosion"), transform.position, transform.rotation);
             }

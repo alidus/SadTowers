@@ -20,8 +20,18 @@
 		"damage": 3,
 		"fire_delay": 0.35
 	},
-	"starting_money": 12,
+	"tower_3":{
+		"name": "Flamethrower",
+		"cost": 30,
+		"range": 20,
+		"damage": 1,
+		"fire_delay": 0.1
+	},
+	"starting_money": 9000,
 	"starting_lifes": 20,
 	"tower_2_rocket_base_speed": 17,
-	"game_start_delay": 10
+	"game_start_delay": 5,
+	"endless_mode_base_health": 5,
+	"endless_mode_base_speed": 5,
+	"endless_mode_speed_per_wave": 1
 }
