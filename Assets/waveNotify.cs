@@ -9,7 +9,7 @@ public class waveNotify : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        text = this.transform.FindChild("Text").GetComponent<Text>();
+        text = this.transform.Find("Text").GetComponent<Text>();
 
     }
 	

@@ -17,7 +17,7 @@ public class enemy_logic : MonoBehaviour {
     private game_logic game_logic;
     // Use this for initialization
     void Start () {
-        textcomponent = gameObject.transform.FindChild("hp_text_canva").transform.FindChild("Text").GetComponent<Text>();
+        textcomponent = gameObject.transform.Find("hp_text_canva").transform.Find("Text").GetComponent<Text>();
         waypoints = GameObject.Find("Waypoints");
         targetNextWaypoint();
         game_logic = GameObject.Find("GameLogic").GetComponent<game_logic>();

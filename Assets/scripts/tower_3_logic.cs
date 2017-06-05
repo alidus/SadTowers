@@ -8,6 +8,12 @@ public class tower_3_logic : towerLogic
     private void Awake()
         {
         codeName = "tflame1";
+
+        lightObject = new GameObject("The Light");
+        lightComp = lightObject.AddComponent<Light>();
+        lightComp.intensity = 5;
+        lightComp.color = Color.yellow;
+        lightObject.transform.position = transform.position;
         }
 
     private GameObject FlameParticles;

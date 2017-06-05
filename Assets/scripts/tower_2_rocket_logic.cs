@@ -4,7 +4,7 @@ using System;
 public class tower_2_rocket_logic : MonoBehaviour {
     public GameObject target_enemy;
     private Vector3 direction;
-    public float speed;
+    private float speed = 12f;
     private float dist_per_frame;
     public float damage;
     private float stage2_radius = 0;

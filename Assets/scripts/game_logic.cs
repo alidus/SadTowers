@@ -71,7 +71,7 @@ public class game_logic : MonoBehaviour {
         list_of_turret_panels_images.Add(GameObject.Find("turret_1_panel").GetComponent<Image>());
         list_of_turret_panels_images.Add(GameObject.Find("turret_2_panel").GetComponent<Image>());
         list_of_turret_panels_images.Add(GameObject.Find("turret_3_panel").GetComponent<Image>());
-        game_start_cooldown = Data_Store.data.game_start_delay;
+        game_start_cooldown = Data_Store.getData().game_start_delay;
         HideUnecessaryUiStuff();
         init_current_playing_song_shower();
         PlayMusic();
@@ -139,9 +139,8 @@ public class game_logic : MonoBehaviour {
         
     void SetupVariables()
         {
-        print(Data_Store.data.tower_2.name);
-        lifes = Data_Store.data.starting_lifes;
-        money = Data_Store.data.starting_money;
+        lifes = Data_Store.getData().starting_lifes;
+        money = Data_Store.getData().starting_money;
         }
 	public void AddMoney(int money_income)
         {
@@ -164,18 +163,36 @@ public class game_logic : MonoBehaviour {
         }
     void ChangeTurretsPanelInfo ()
         {
-        GameObject.Find("turret_1_info").GetComponent<Text>().text = "Cost: " + 
-            Data_Store.data.tower_1.cost.ToString() + "\nDPS: " + 
-            System.Math.Round((Data_Store.data.tower_1.damage / Data_Store.data.tower_1.fire_delay), 2).ToString() + 
-            "\nRange: " + Data_Store.data.tower_1.range.ToString();
-        GameObject.Find("turret_2_info").GetComponent<Text>().text = "Cost: " +
-            Data_Store.data.tower_2.cost.ToString() + "\nDPS: " +
-            System.Math.Round((Data_Store.data.tower_2.damage / Data_Store.data.tower_2.fire_delay), 2).ToString() +
-            "\nRange: " + Data_Store.data.tower_2.range.ToString();
-        GameObject.Find("turret_3_info").GetComponent<Text>().text = "Cost: " +
-            Data_Store.data.tower_3.cost.ToString() + "\nDPS: " +
-            System.Math.Round((Data_Store.data.tower_3.damage / Data_Store.data.tower_3.fire_delay), 2).ToString() +
-            "\nRange: " + Data_Store.data.tower_3.range.ToString();
+        GameObject turretsPanel = GameObject.Find("tp_wo_l");
+        data_store_logic.TowerData towerData;
+        int i = 0;
+        foreach (Transform childTrans in turretsPanel.transform)
+            {
+            towerData = Data_Store.getTowerData(i);
+            print(towerData.codename);
+            childTrans.GetChild(1).gameObject.GetComponent<Text>().text = "Cost: " +
+        towerData.cost.ToString() + "\nDPS: " + 
+        System.Math.Round((towerData.damage / towerData.fire_delay), 2).ToString() + 
+        "\nRange: " + towerData.range.ToString();
+            i++;
+            }
+
+        //GameObject.Find("turret_1_info").GetComponent<Text>().text = "Cost: " + 
+        //    Data_Store.data.tower_1.cost.ToString() + "\nDPS: " + 
+        //    System.Math.Round((Data_Store.data.tower_1.damage / Data_Store.data.tower_1.fire_delay), 2).ToString() + 
+        //    "\nRange: " + Data_Store.data.tower_1.range.ToString();
+        //GameObject.Find("turret_2_info").GetComponent<Text>().text = "Cost: " +
+        //    Data_Store.data.tower_2.cost.ToString() + "\nDPS: " +
+        //    System.Math.Round((Data_Store.data.tower_2.damage / Data_Store.data.tower_2.fire_delay), 2).ToString() +
+        //    "\nRange: " + Data_Store.data.tower_2.range.ToString();
+        //GameObject.Find("turret_3_info").GetComponent<Text>().text = "Cost: " +
+        //    Data_Store.data.tower_3.cost.ToString() + "\nDPS: " +
+        //    System.Math.Round((Data_Store.data.tower_3.damage / Data_Store.data.tower_3.fire_delay), 2).ToString() +
+        //    "\nRange: " + Data_Store.data.tower_3.range.ToString();
+        //GameObject.Find("turret_4_info").GetComponent<Text>().text = "Cost: " +
+        //    Data_Store.data.tower_3.cost.ToString() + "\nDPS: " +
+        //    System.Math.Round((Data_Store.data.tower_3.damage / Data_Store.data.tower_3.fire_delay), 2).ToString() +
+        //    "\nRange: " + Data_Store.data.tower_3.range.ToString();
         }
     public void ChangeSelectedTurretTo(int index)
         {
@@ -283,7 +300,6 @@ public class game_logic : MonoBehaviour {
         control_text.enabled = false;
         option_text.enabled = false;
         exit_game_text.enabled = false;
-        print("PP panel state = " + false.ToString());
         }
 
 

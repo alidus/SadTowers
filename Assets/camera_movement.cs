@@ -7,36 +7,61 @@ public class camera_movement : MonoBehaviour {
     int cameraRotationSpeed = 2;
     float height = 50f;
 
-    private Vector3 cameraMovementVector = new Vector3(0, 0, 0);
-    private int[] positionLimitBox = new int[2];
+    private Vector3 cameraMovementVector = Vector3.zero;
+    private float[] positionLimitBox = new float[2];
 
+    private Camera cameraComp;
     private Vector3 dragOrigin;
-    public float dragSpeed = 2;
+    private Vector3 oldDragPosition;
+    private bool isDragging = false;
+
  
 	// Use this for initialization
 	void Start () {
         setLimitBox();
+        cameraComp = GetComponent<Camera>();
         }
-    public void setLimitBox(int x = 50, int y = 50)
+    public void setLimitBox(float x = 150, float y = 150)
         {
         positionLimitBox[0] = x;
         positionLimitBox[1] = y;
         }
     private void Update()
         {
+        cameraMovementVector = Vector3.zero;
+        RotateCamera();
+        //if (Input.GetMouseButtonDown(0))
+        //    {
+        //    dragOrigin = Input.mousePosition;
+        //    oldDragPosition = transform.position;
+        //    isDragging = true;
+        //    }
+        //else if (Input.GetMouseButtonUp(0))
+        //    {
+        //    isDragging = false;
+        //    }
+
+        //if (Input.GetMouseButton(0))
+        //    {
+        //    Vector3 pos = cameraComp.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+        //    transform.position = oldDragPosition - pos * 10;
+        //    }
+        
+
         checkScreenSidesTouches();
         if (cameraMovementVector != Vector3.zero)
             {
             AdjustMovementVectorToRotation();
             MoveCamera();
-            ConsiderLimitBox();
+            
             }
-        RotateCamera();
+        ConsiderLimitBox();
+
+        
         }
 
     private void checkScreenSidesTouches()
-        {
-        cameraMovementVector = Vector3.zero;
+        { 
         if (Input.mousePosition.x <= reactingZonesWide)
             {
             cameraMovementVector = new Vector3(-speedWithScreenSidesTouches, 0, 0);
@@ -76,22 +101,21 @@ public class camera_movement : MonoBehaviour {
             {
             transform.Rotate(new Vector3(0, cameraRotationSpeed, 0), Space.World);
             }
-        print(transform.eulerAngles);
         }
 
     private void ConsiderLimitBox()
         {
-        if (transform.position.x < -positionLimitBox[0])
+        if (transform.position.x < -(positionLimitBox[0]-100))
             {
-            transform.position = new Vector3(-positionLimitBox[0], transform.position.y, transform.position.z);
+            transform.position = new Vector3(-(positionLimitBox[0] - 100), transform.position.y, transform.position.z);
             }
         else if (transform.position.x > positionLimitBox[0])
             {
             transform.position = new Vector3(positionLimitBox[0], transform.position.y, transform.position.z);
             }
-        if (transform.position.z < -positionLimitBox[1])
+        if (transform.position.z < -(positionLimitBox[1] - 100))
             {
-            transform.position = new Vector3(transform.position.x, transform.position.y,  -positionLimitBox[1]);
+            transform.position = new Vector3(transform.position.x, transform.position.y, -(positionLimitBox[1] - 100));
             }
         else if (transform.position.z > positionLimitBox[1])
             {

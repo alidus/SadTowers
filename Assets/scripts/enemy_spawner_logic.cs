@@ -23,7 +23,7 @@ public class enemy_spawner_logic : MonoBehaviour {
         enemyProto = Resources.Load("game_units/enemies/enemyProto") as GameObject;
         Data_Store = GameObject.Find("DataStore").GetComponent<data_store_logic>();
         loadAllEnemiesModels();
-        game_start_delay = Data_Store.data.game_start_delay;
+        game_start_delay = Data_Store.getData().game_start_delay;
         if (gameMode == 0)
             {
             spawn_delay = spawnTime;
@@ -37,16 +37,10 @@ public class enemy_spawner_logic : MonoBehaviour {
             {
             listOfEnemiesModels.Add(model as GameObject);
             }
-        print(listOfEnemiesModels);
         }
     GameObject getRandomModel()
         {
-        print(Random.Range(0, 2));
         return listOfEnemiesModels[Random.Range(0, listOfEnemiesModels.Count)];
-        }
-	void ChangeEnemyColor()
-        {
-        enemyColor = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
         }
 	// Update is called once per frame
     void spawnEnemy(GameObject model, float health, float speed, Color color)
@@ -60,48 +54,46 @@ public class enemy_spawner_logic : MonoBehaviour {
 
     int getCurrentWaveEnemyHealth()
         {
-        return Data_Store.data.endless_mode_base_health + wave * 4;
+        return Data_Store.getData().endless_mode_base_health + wave * 5;
         }
 
     int getCurrentWaveEnemySpeed()
         {
-        return Data_Store.data.endless_mode_base_speed + Data_Store.data.endless_mode_speed_per_wave * wave;
+        return Data_Store.getData().endless_mode_base_speed + Data_Store.getData().endless_mode_speed_per_wave * wave;
         }
 
     void Update () {
         if (game_start_delay <= 0)
             {
-            // Endless mode
-            if (gameMode == 0)
+            switch (gameMode)
                 {
-                if (spawn_delay >= spawnTime)
-                    {
-                    // TODO: spawn
-                    spawnEnemy(getRandomModel(), getCurrentWaveEnemyHealth(), getCurrentWaveEnemySpeed(), enemyColor);
-                    enemiesSpawnedInWave += 1;
-                    if (enemiesSpawnedInWave == totalEnemiesInWave)
+                // Endless
+                case 0:
+                    if (spawn_delay >= spawnTime)
                         {
-                        wave += 1;
-                        print("Wave " + wave + " incoming");
-                        waveNotifier.Notify(wave+1);
-                        enemiesSpawnedInWave = 0;
-                        ChangeEnemyColor();
+                        // TODO: spawn
+                        spawnEnemy(getRandomModel(), getCurrentWaveEnemyHealth(), getCurrentWaveEnemySpeed(), enemyColor);
+                        enemiesSpawnedInWave += 1;
+                        if (enemiesSpawnedInWave == totalEnemiesInWave)
+                            {
+                            wave += 1;
+                            print("Wave " + wave + " incoming");
+                            waveNotifier.Notify(wave + 1);
+                            enemiesSpawnedInWave = 0;
+                            }
+                        spawn_delay = 0;
                         }
-                    spawn_delay = 0;
-                    }
 
-                else
-                    {
-                    spawn_delay += Time.deltaTime;
-                    }
+                    else
+                        {
+                        spawn_delay += Time.deltaTime;
+                        }
+                    break;
+                default:
+                    break;
                 }
-            // Limited waves
-            else
-                {
 
-                }
-            
-            
+
             }
         else
             {

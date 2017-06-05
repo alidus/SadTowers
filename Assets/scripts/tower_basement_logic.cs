@@ -23,13 +23,13 @@ public class tower_basement_logic : MonoBehaviour {
 	void Start () {
         DataStore = GameObject.Find("DataStore").GetComponent<data_store_logic>();
         game_logic = GameObject.Find("GameLogic").GetComponent<game_logic>();
-        option_menu = gameObject.transform.FindChild("basement_functions_canva").GetComponent<Canvas>();
-        upgrade_button = gameObject.transform.FindChild("basement_functions_canva").transform.FindChild("options_panel").transform.FindChild("upgrade_button").gameObject;
-        upgrade_button_price_panel = upgrade_button.transform.FindChild("price_panel").gameObject;
-        upgrade_button_price = upgrade_button_price_panel.transform.FindChild("price").gameObject;
+        option_menu = gameObject.transform.Find("basement_functions_canva").GetComponent<Canvas>();
+        upgrade_button = gameObject.transform.Find("basement_functions_canva").transform.Find("options_panel").transform.Find("upgrade_button").gameObject;
+        upgrade_button_price_panel = upgrade_button.transform.Find("price_panel").gameObject;
+        upgrade_button_price = upgrade_button_price_panel.transform.Find("price").gameObject;
         option_menu.enabled = false;
-        options_panel_go = option_menu.transform.FindChild("options_panel").gameObject;
-        remove_button = options_panel_go.transform.FindChild("remove_button").gameObject;
+        options_panel_go = option_menu.transform.Find("options_panel").gameObject;
+        remove_button = options_panel_go.transform.Find("remove_button").gameObject;
         options_panel_go.GetComponent<Image>().CrossFadeAlpha(0f, 0f, false);
         remove_button.GetComponent<Image>().CrossFadeAlpha(0f, 0f, false);
         upgrade_button.GetComponent<Image>().CrossFadeAlpha(0f, 0f, false);
@@ -61,48 +61,52 @@ public class tower_basement_logic : MonoBehaviour {
             ShowHideOptionsMenu();
             return;
             }
-        int turret_cost;
         // Different actions for different selected towers
         switch (game_logic.selected_turret_index)
             {
             case 0:
-                turret = Resources.Load("game_units/towers/tower_1") as GameObject;
-                turret_cost = DataStore.data.tower_1.cost;
-                print("cost determined = " + turret_cost.ToString());
-                if (turret_cost <= game_logic.money)
+                if (!TryToBuildTower("game_units/towers/tower_1", DataStore.getTowerData(0)))
                     {
-                    Instantiate(turret, transform.position, transform.rotation, transform);
-                    game_logic.SubMoney(turret_cost);
-                    state = 1;
-                    //ActivateUpgradeButton(turret_cost);
                     DeactivateUpgradeButton();
                     }
                 break;
             case 1:
-                turret = Resources.Load("game_units/towers/tower_2") as GameObject;
-                turret_cost = DataStore.data.tower_2.cost;
-                if (turret_cost <= game_logic.money)
+                if (!TryToBuildTower("game_units/towers/tower_2", DataStore.getTowerData(1)))
                     {
-                    Instantiate(turret, transform.position, transform.rotation, transform);
-                    game_logic.SubMoney(turret_cost);
-                    state = 1;
-                    //TODO: fix this shit!!!!
-                    ActivateUpgradeButton(DataStore.data.tower_2_1.cost);
+                    DeactivateUpgradeButton();
+                    }
+                else 
+                {
+                    ActivateUpgradeButton(DataStore.getTowerData(4).cost);
                     }
                 break;
             case 2:
-                turret = Resources.Load("game_units/towers/tower_3") as GameObject;
-                turret_cost = DataStore.data.tower_3.cost;
-                if (turret_cost <= game_logic.money)
+                if (!TryToBuildTower("game_units/towers/tower_3", DataStore.getTowerData(2)))
                     {
-                    Instantiate(turret, transform.position, transform.rotation, transform);
-                    game_logic.SubMoney(turret_cost);
-                    state = 1;
-                    //TODO: fix this shit!!!!
-                    ActivateUpgradeButton(DataStore.data.tower_3.cost);
+                    DeactivateUpgradeButton();
+                    }
+                break;
+            case 3:
+                if (!TryToBuildTower("game_units/towers/tower_4", DataStore.getTowerData(3)))
+                    {
+                    DeactivateUpgradeButton();
                     }
                 break;
             }
+        }
+
+    bool TryToBuildTower(string modelPath, data_store_logic.TowerData data)
+        {
+        turret = Resources.Load(modelPath) as GameObject;
+        int turret_cost = data.cost;
+        if (turret_cost <= game_logic.money)
+            {
+            Instantiate(turret, transform.position, transform.rotation, transform);
+            game_logic.SubMoney(turret_cost);
+            state = 1;
+            return true;
+            }
+        return false;
         }
     void ShowHideOptionsMenu()
         {
@@ -148,14 +152,31 @@ public class tower_basement_logic : MonoBehaviour {
                 Destroy(child.gameObject);
                 if (not_upgrade)
                     {
-                    if (child.name == "tower_1(Clone)")
+                    switch (child.name)
                         {
-                        print("+ money");
-                        game_logic.AddMoney(DataStore.data.tower_1.cost / 2); }
-                    else if (child.name == "tower_2(Clone)")
-                        {
-                        print("+ money");
-                        game_logic.AddMoney(DataStore.data.tower_2.cost / 2); }
+                        case "tower_1(Clone)":
+                            print("+ money");
+                            game_logic.AddMoney(DataStore.getTowerData(0).cost / 2);
+                            break;
+                        case "tower_2(Clone)":
+                            print("+ money");
+                            game_logic.AddMoney(DataStore.getTowerData(1).cost / 2);
+                            break;
+                        case "tower_2_1(Clone)":
+                            print("+ money");
+                            game_logic.AddMoney((DataStore.getTowerData(4).cost + DataStore.getTowerData(1).cost) / 2);
+                            break;
+                        case "tower_3(Clone)":
+                            print("+ money");
+                            game_logic.AddMoney(DataStore.getTowerData(2).cost / 2);
+                            break;
+                        case "tower_4(Clone)":
+                            print("+ money");
+                            game_logic.AddMoney(DataStore.getTowerData(3).cost / 2);
+                            break;
+                        default:
+                            break;
+                        }
                     }
                 }
             }
@@ -185,9 +206,13 @@ public class tower_basement_logic : MonoBehaviour {
                     case "tower_2(Clone)":
                         print("found tower 2");
                         upgraded_tower_object = Resources.Load("game_units/towers/tower_2_1", typeof(GameObject)) as GameObject;
-                        upgraded_tower_cost = DataStore.data.tower_2_1.cost;
+                        upgraded_tower_cost = DataStore.getTowerData(4).cost;
                         print("upgrade_cost = " + upgraded_tower_cost);
 ;                        break;
+                    case "tower_3(Clone)":
+                        print("found tower 1");
+
+                        break;
                     }
                 if (upgraded_tower_object!=null && upgraded_tower_cost <= game_logic.money)
                     {

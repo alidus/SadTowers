@@ -11,6 +11,8 @@ public class towerLogic : MonoBehaviour
     protected int cost;
     protected string codeName;
     protected Vector3 enemyPosition;
+    protected GameObject lightObject;
+    protected Light lightComp;
 
     private float current_shoot_cooldown = 0;
     protected GameObject target_enemy_go;
@@ -19,7 +21,7 @@ public class towerLogic : MonoBehaviour
     protected bool isFireing = false;   
 
     void Start()
-        {
+        { 
         SetupSpecs(codeName);
         enemies = GameObject.FindGameObjectsWithTag("enemy");
         FindNearestEnemy();

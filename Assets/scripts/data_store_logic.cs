@@ -5,15 +5,11 @@ using System.Collections.Generic;
 
 public class data_store_logic : MonoBehaviour {
     // Data_Store = GameObject.Find("Data_Store").GetComponent<data_store_logic>();
-    public SerializedData data;
+    private SerializedData data;
     [System.Serializable]
     public class SerializedData
         {
-        public TowerData tower_1;
-        public TowerData tower_2;
-        public TowerData tower_2_1;
-        public TowerData tower_3;
-        public TowerData tower_4;
+        public TowerData[] towersData;
         public int starting_money;
         public int starting_lifes;
         public int tower_2_rocket_base_speed;
@@ -42,25 +38,24 @@ public class data_store_logic : MonoBehaviour {
 
     public TowerData getTowerData(string codename)
         {
-        switch (codename)
-            {
-            case "tsimple1":
-                return data.tower_1;
-                break;
-            case "trocket1":
-                return data.tower_2;
-                break;
-            case "trocket2":
-                return data.tower_2_1;
-                break;
-            case "tflame1":
-                return data.tower_3;
-                break;
-            case "tdark1":
-                return data.tower_4;
-                break;
-            default:
-                return null;
+        TowerData resultTowerData = null;
+        foreach (TowerData towerData in data.towersData)
+            { 
+            if (towerData.codename == codename)
+                {
+                resultTowerData = towerData;
+                } 
             }
+        return resultTowerData;
         }
-}
+
+    public TowerData getTowerData(int index)
+        {
+        return data.towersData[index];
+        }
+
+    public SerializedData getData()
+        {
+        return data;
+        }
+    }

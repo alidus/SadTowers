@@ -1,50 +1,46 @@
 {
-	"tower_1":{
+	"towersData":[{
 		"name": "Simple turret",
 		"codename":"tsimple1",
 	    "cost": 5,
 	    "range": 30,
 		"damage": 1,
 		"fire_delay": 0.55,
-		"turnRate": 1
-	},
-    "tower_2":{
+		"turnRate": 5
+	},{
 		"name": "Rocket turret",
 		"codename":"trocket1",
 		"cost": 10,
 		"range": 35,
 		"damage": 2,
 		"fire_delay": 0.7,
-		"turnRate": 1
-	},
-	"tower_2_1":{
-		"name": "Rocket turret v2",
-		"codename":"trocket2",
-		"cost": 20,
-		"range": 40,
-		"damage": 3,
-		"fire_delay": 0.35,
-		"turnRate": 1
-	},
-	"tower_3":{
+		"turnRate": 5
+	},{
 		"name": "Flamethrower",
 		"codename":"tflame1",
 		"cost": 30,
 		"range": 20,
 		"damage": 1,
 		"fire_delay": 0.1,
-		"turnRate": 1
-	},
-	"tower_4":{
+		"turnRate": 5
+	},{
 		"name": "Dark energy turret",
 		"codename":"tdark1",
 		"cost": 50,
 		"range": 30,
-		"damage": 10,
-		"fire_delay": 10,
-		"turnRate": 2
-	},
-	"starting_money": 30,
+		"damage": 20,
+		"fire_delay": 5,
+		"turnRate": 5
+	},{
+		"name": "Rocket turret v2",
+		"codename":"trocket2",
+		"cost": 20,
+		"range": 40,
+		"damage": 3,
+		"fire_delay": 0.35,
+		"turnRate": 5
+	}],
+	"starting_money": 10,
 	"starting_lifes": 20,
 	"tower_2_rocket_base_speed": 17,
 	"game_start_delay": 5,
